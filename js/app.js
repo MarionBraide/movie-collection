@@ -2,6 +2,15 @@ document.addEventListener('DOMContentLoaded', () => {
   loadMovies();
 });
 
+document.getElementById('genre-filter').addEventListener('change', (event) => {
+  const selectedGenre = event.target.value;
+  if (selectedGenre === 'all') {
+    loadMovies();
+    return;
+  }
+  filterMoviesByGenre(selectedGenre);
+});
+
 function loadMovies() {
   fetch('./js/data/movies.json')
     .then(response => response.json())
@@ -31,4 +40,16 @@ function renderCards(movieList) {
 
     cardGrid.appendChild(card);
   })
+}
+
+function filterMoviesByGenre(genre) {
+  fetch('./js/data/movies.json')
+    .then(response => response.json())
+    .then(data => {
+      const movies = data.movies;
+      const filteredMovies = movies.filter(movie => movie.genre.toLowerCase().includes(genre.toLowerCase()));
+      console.log('Movies loaded');
+      renderCards(filteredMovies)
+    })
+    .catch(error => console.error('Error loading movies:', error));
 }
