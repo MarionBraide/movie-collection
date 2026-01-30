@@ -22,7 +22,7 @@ function renderCards(movieList) {
     card.className = 'movie-card';
 
     card.innerHTML = `
-      <img src="${movie.image}" alt="${movie.title} Poster">
+      <img src="${movie.poster}" alt="${movie.title} Poster">
       <h2>${movie.title}</h2>
       <p><strong>Year:</strong> ${movie.year}</p>
       <p><strong>Genre:</strong> ${movie.genre}</p>
