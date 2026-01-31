@@ -108,6 +108,14 @@ A movie collection web app using CLI commands, file operations and Git collabora
     - Re-rendered filtered movie list dynamically
     - Handled "All" option by resetting filter and showing full dataset
 
+### feature/pagination
+
+    - Implemented pagination with dynamic page numbers based on filtered movie list
+    - Added event listener to pagination buttons
+    - Updated pagination buttons to reflect current page number and total pages
+    - Filtered movie array based on selected genre and current page number
+    - Re-rendered filtered and paginated movie list dynamically
+
 ## Team Member Contributions
 
 ### Marionbraide Contributions
@@ -124,6 +132,7 @@ A movie collection web app using CLI commands, file operations and Git collabora
     - Used Fetch API to load movie data.
     - Rendered movie cards from data while keeping the existing UI layout.
     - Implemented genre-based movie filtering.
+    - Implemented pagination with dynamic page numbers
 
 ## Lessons learned from collaboration
 
@@ -138,3 +147,4 @@ A movie collection web app using CLI commands, file operations and Git collabora
     - I discovered how to correctly specify file paths when using the Fetch API to load JSON data into a web page.
     - Double-check that you are using the correct properties and values of your data before trying to debug other issues.
     - Gained experience working with Git collaboration workflows.
+    - I learned to avoid repetition by creating functions to perform specific tasks.
