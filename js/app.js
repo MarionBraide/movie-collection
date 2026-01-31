@@ -6,15 +6,19 @@ document.getElementById('genre-filter').addEventListener('change', (event) => {
   const selectedGenre = event.target.value;
   pageNumber = 1;
   if (selectedGenre === 'all') {
-    loadMovies();
-    return;
+    currentMovies = allMovies;
+  } else {
+    currentMovies = allMovies.filter(movie =>
+      movie.genre.toLowerCase().includes(selectedGenre.toLowerCase())
+    );
   }
-  filterMoviesByGenre(selectedGenre);
+  renderPage();
 });
 
-const pageSize = 5;
+const pageSize = 2;
 let pageNumber = 1;
 let allMovies = [];
+let currentMovies = [];
 
 const prevButton = document.querySelector('.prev');
 const nextButton = document.querySelector('.next');
@@ -25,11 +29,15 @@ function loadMovies() {
     .then(response => response.json())
     .then(data => {
       allMovies = data.movies;
-      console.log('Movies loaded');
-      renderCards(paginateMovies(allMovies, pageSize, pageNumber));
-      updatePaginationButtons(allMovies.length, pageSize, pageNumber);
+      currentMovies = allMovies;
+      renderPage();
     })
     .catch(error => console.error('Error loading movies:', error));
+}
+
+function renderPage() {
+  renderCards(paginateMovies(currentMovies, pageSize, pageNumber));
+  updatePaginationButtons(currentMovies.length, pageSize, pageNumber);
 }
 
 function renderCards(movieList) {
@@ -49,15 +57,7 @@ function renderCards(movieList) {
     `;
 
     cardGrid.appendChild(card);
-  })
-}
-
-function filterMoviesByGenre(genre) {
-  const filteredMovies = allMovies.filter(movie =>
-    movie.genre.toLowerCase().includes(genre.toLowerCase())
-  );
-  renderCards(paginateMovies(filteredMovies, pageSize, pageNumber));
-  updatePaginationButtons(filteredMovies.length, pageSize, pageNumber);
+  });
 }
 
 function paginateMovies(movieList, pageSize, pageNumber) {
@@ -70,31 +70,31 @@ function updatePaginationButtons(totalMovies, pageSize, currentPage) {
   const totalPages = Math.ceil(totalMovies / pageSize);
   prevButton.disabled = currentPage === 1;
   nextButton.disabled = currentPage === totalPages;
+
+  pageButtons.forEach((button, index) => {
+    button.classList.toggle('active', index + 1 === currentPage);
+    button.disabled = index + 1 > totalPages;
+  });
 }
 
 prevButton.addEventListener('click', () => {
   if (pageNumber > 1) {
     pageNumber--;
-    loadMovies();
+    renderPage();
   }
 });
 
 nextButton.addEventListener('click', () => {
-  const totalPages = Math.ceil(allMovies.length / pageSize);
+  const totalPages = Math.ceil(currentMovies.length / pageSize);
   if (pageNumber < totalPages) {
     pageNumber++;
-    loadMovies();
+    renderPage();
   }
 });
 
 pageButtons.forEach((button, index) => {
   button.addEventListener('click', () => {
-    const prevActive = document.querySelector('.page.active');
-    if (prevActive) {
-      prevActive.classList.remove('active');
-    }
     pageNumber = index + 1;
-    button.classList.add('active');
-    loadMovies();
+    renderPage();
   });
 });
