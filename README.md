@@ -126,7 +126,7 @@ A movie collection web app using CLI commands, file operations and Git collabora
     - Linked local images to HTML correctly
     - Documented project setup and workflow in README
 
-### Fhave Contributions
+### Iyobosa Contributions
 
     - Moved movie data from HTML into a JSON file.
     - Used Fetch API to load movie data.
@@ -142,7 +142,7 @@ A movie collection web app using CLI commands, file operations and Git collabora
     - I struggled with accidentally editing files in the wrong branch, which caused CSS and HTML to not sync correctly and even temporarily “lost” my HTML.
     - Overall, I’m improving my workflow, and these experiences are teaching me to plan branch structure and commits more carefully.
 
-### Fhave
+### Iyobosa
 
     - I discovered how to correctly specify file paths when using the Fetch API to load JSON data into a web page.
     - Double-check that you are using the correct properties and values of your data before trying to debug other issues.
