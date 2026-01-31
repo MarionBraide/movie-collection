@@ -15,14 +15,14 @@ document.getElementById('genre-filter').addEventListener('change', (event) => {
   renderPage();
 });
 
-const pageSize = 2;
+const pageSize = 5;
 let pageNumber = 1;
 let allMovies = [];
 let currentMovies = [];
 
 const prevButton = document.querySelector('.prev');
 const nextButton = document.querySelector('.next');
-const pageButtons = document.querySelectorAll('.page');
+const pageNumbersContainer = document.querySelector('.page-numbers');
 
 function loadMovies() {
   fetch('./js/data/movies.json')
@@ -68,8 +68,25 @@ function paginateMovies(movieList, pageSize, pageNumber) {
 
 function updatePaginationButtons(totalMovies, pageSize, currentPage) {
   const totalPages = Math.ceil(totalMovies / pageSize);
+
   prevButton.disabled = currentPage === 1;
   nextButton.disabled = currentPage === totalPages;
+
+  pageNumbersContainer.innerHTML = '';
+
+  for (let i = 1; i <= totalPages; i++) {
+    const button = document.createElement('button');
+    button.textContent = i;
+    button.classList.add('page');
+    if (i === currentPage) button.classList.add('active');
+
+    button.addEventListener('click', () => {
+      pageNumber = i;
+      renderPage();
+    });
+
+    pageNumbersContainer.appendChild(button);
+  }
 
   pageButtons.forEach((button, index) => {
     button.classList.toggle('active', index + 1 === currentPage);
